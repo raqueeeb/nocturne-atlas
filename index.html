@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0c12" />
+    <meta name="description" content="Nocturne Atlas is a 3D field guide to the places that only exist when you let yourself get lost." />
+    <title>Nocturne Atlas — The world just past the map</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"
+        }
+      }
+    </script>
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <canvas id="atlas-canvas" tabindex="0" aria-keyshortcuts="ArrowLeft ArrowRight ArrowUp ArrowDown" aria-label="Interactive three-dimensional globe with glowing destination markers. Drag or use arrow keys to rotate it."></canvas>
+    <div class="film-grain" aria-hidden="true"></div>
+    <div class="edge-vignette" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="Nocturne Atlas home">
+        <span class="brand-symbol">N<span>✳</span></span>
+        <span class="brand-wordmark">NOCTURNE<small>FIELD ATLAS · VOL. 01</small></span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="#atlas">The atlas</a>
+        <a href="#fieldnotes">Field notes</a>
+        <a href="#method">Our method</a>
+      </nav>
+      <a class="header-cta" href="#atlas">Choose a world <span>↗</span></a>
+      <button class="menu-button" id="menu-button" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+    </header>
+
+    <main>
+      <section class="hero page-section" id="home" data-section="0">
+        <div class="hero-copy">
+          <div class="kicker"><span class="kicker-dot"></span> A FIELD GUIDE TO ELSEWHERE</div>
+          <h1>The world<br />just past<br /><em>the map.</em></h1>
+          <p>There are places you don't find. They find you when you stop looking for the way back.</p>
+          <a class="hero-link" href="#atlas"><span class="hero-link-icon">↓</span><span>Find your elsewhere</span><span class="hero-link-meta">SCROLL TO EXPLORE</span></a>
+        </div>
+        <div class="hero-coordinate mono"><span>THE KNOWN WORLD ENDS HERE</span><br />68° 14' N &nbsp; / &nbsp; 019° 22' W</div>
+        <div class="hero-label mono"><span class="label-pulse"></span> LIVE ORRERY &nbsp;·&nbsp; DRAG / ARROWS TO ORIENT</div>
+        <div class="hero-bottom mono"><span>FIG. 001</span><span>AN UNFINISHED ATLAS OF IMAGINED PLACES</span><span>EST. AFTER DARK</span></div>
+        <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress"></span></div>
+      </section>
+
+      <section class="atlas-section page-section" id="atlas" data-section="1">
+        <div class="section-topline">
+          <span class="eyebrow"><span class="eyebrow-number">01</span> THE UNFINISHED ATLAS</span>
+          <span class="mono section-coordinate">SIX PLACES, APPROXIMATELY</span>
+        </div>
+        <div class="atlas-heading">
+          <div><h2>Choose a place<br />that <em>chooses you.</em></h2></div>
+          <p>Each world has its own weather, its own strange hour. Pick a light in the dark and see what waits there.</p>
+        </div>
+        <div class="destination-grid" id="destination-grid"></div>
+        <div class="destination-detail" id="destination-detail" aria-live="polite">
+          <span class="detail-star">✳</span>
+          <div><span class="mono" id="detail-meta">YOUR FIRST COORDINATE</span><p id="detail-copy">Choose one of the worlds. There is no wrong direction from here.</p></div>
+          <span class="detail-compass mono" id="detail-compass">N / A</span>
+        </div>
+      </section>
+
+      <section class="fieldnotes-section page-section" id="fieldnotes" data-section="2">
+        <div class="fieldnotes-image" aria-hidden="true">
+          <div class="moon-orbit"><span class="moon-core"></span><span class="moon-ring ring-one"></span><span class="moon-ring ring-two"></span><span class="moon-satellite"></span></div>
+          <span class="image-index mono">ARCHIVE OBJECT &nbsp; 08 / 24</span>
+          <span class="image-caption mono">THE HOUR BEFORE THE FIRST BIRD</span>
+        </div>
+        <div class="fieldnotes-copy">
+          <span class="eyebrow"><span class="eyebrow-number">02</span> A NOTE FROM THE EDGE</span>
+          <span class="fieldnote-date mono">FIELD NOTE · NO. 014 · UNSENT</span>
+          <h2>It is always<br />quieter on<br />the <em>other side.</em></h2>
+          <p class="fieldnote-body">I found the island just before the fog remembered it was fog. The sky was the colour of an old blue cup. Someone had left a door standing open in a tree.</p>
+          <p class="fieldnote-body">I didn't go in. Some things feel more like yours when you leave them exactly as you found them.</p>
+          <div class="fieldnote-signoff"><span class="signoff-rule"></span><span class="mono">M. · STILL WALKING</span></div>
+          <button class="save-note" id="save-note" aria-pressed="false"><span class="save-icon">♡</span> <span id="save-label">Keep this note</span></button>
+        </div>
+      </section>
+
+      <section class="method-section page-section" id="method" data-section="3">
+        <div class="method-topline">
+          <span class="eyebrow"><span class="eyebrow-number">03</span> HOW TO GET LOST</span>
+          <span class="mono">NO MAP IS REQUIRED</span>
+        </div>
+        <h2>Four small instructions<br />for <em>another kind of distance.</em></h2>
+        <div class="method-grid">
+          <article class="method-card"><span class="method-number mono">I / BEGIN</span><span class="method-icon">↗</span><h3>Pick a direction<br />you can't explain.</h3><p>Curiosity doesn't need a reason. Let the glow on the edge of the map be enough.</p></article>
+          <article class="method-card"><span class="method-number mono">II / WANDER</span><span class="method-icon">⌁</span><h3>Stay for the<br />strange weather.</h3><p>Every place changes if you give it a little time. So does the person looking.</p></article>
+          <article class="method-card"><span class="method-number mono">III / NOTICE</span><span class="method-icon">✳</span><h3>Keep one small<br />thing in mind.</h3><p>A sound. A colour. The way the dark made room for something bright.</p></article>
+          <article class="method-card"><span class="method-number mono">IV / RETURN</span><span class="method-icon">↶</span><h3>Bring back<br />only the feeling.</h3><p>The best souvenirs fit in the quiet pocket behind your ribs.</p></article>
+        </div>
+        <a class="method-link" href="#home"><span>↺</span> OR DON'T COME BACK JUST YET</a>
+      </section>
+
+      <section class="closing page-section" id="closing" data-section="4">
+        <span class="closing-orbit orbit-a"></span><span class="closing-orbit orbit-b"></span><span class="closing-star">✳</span>
+        <div class="closing-copy">
+          <span class="eyebrow">THE MAP IS ONLY A BEGINNING</span>
+          <h2>Somewhere is<br />already <em>waiting.</em></h2>
+          <a href="#atlas" class="closing-button">Open the atlas <span>↗</span></a>
+        </div>
+        <div class="closing-footer mono"><span>NOCTURNE FIELD ATLAS</span><span>ALL WORLDS ARE WORKS IN PROGRESS</span><span>© 2026</span></div>
+      </section>
+    </main>
+
+    <div class="world-status mono" aria-live="polite"><span class="status-point"></span><span id="world-status">ORRERY IN MOTION</span><span class="status-divider">/</span><span id="world-clock">00:00:00</span></div>
+    <button class="sound-toggle mono" id="motion-toggle" aria-label="Pause 3D motion" aria-pressed="false"><span id="motion-symbol">Ⅱ</span><span id="motion-label">PAUSE ORRERY</span></button>
+    <div class="cursor-halo" aria-hidden="true"></div>
+
+    <div class="destination-modal" id="destination-modal" hidden>
+      <div class="modal-scrim" data-close-modal></div>
+      <section class="destination-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button class="modal-close" id="modal-close" aria-label="Close destination">×</button>
+        <span class="eyebrow" id="modal-eyebrow"></span>
+        <h2 id="modal-title"></h2>
+        <p id="modal-description"></p>
+        <div class="modal-footer"><span class="mono" id="modal-coordinate"></span><button class="modal-return" id="modal-return">Back to the atlas <span>↗</span></button></div>
+      </section>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <noscript><div class="no-script">This atlas needs JavaScript to unfold its 3D worlds.</div></noscript>
+  </body>
+</html>
